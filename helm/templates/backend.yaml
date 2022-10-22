@@ -12,7 +12,7 @@ spec:
       containers:
         - env:
             - name: PROCESS_FUNCTION_URL
-              value: http://process-function-x-default-{{ .Values.teamName }}.{{ .Values.teamName }}.svc.cluster.local
+              value: http://process-function-x-default-x-{{ .Values.teamName }}.{{ .Values.teamName }}.{{ .Values.domainName }}
             - name: BUILT
               value: 20220924T112015
             - name: REDIS_HOST
