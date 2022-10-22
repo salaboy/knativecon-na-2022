@@ -1,0 +1,35 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  annotations:
+
+  name: backend
+spec:
+  template:
+    metadata:
+    spec:
+      containerConcurrency: 0
+      containers:
+        - env:
+            - name: BUILT
+              value: 20220924T112015
+            - name: REDIS_HOST
+              value: my-redis-master:6379
+            - name: REDIS_PASSWORD
+              value: 7c6GmTUzaa #kubectl get secret my-redis -o jsonpath="{.data.redis-password}" | base64 -d
+          image: ko://github.com/salaboy/knativecon-na-2022/backend
+          livenessProbe:
+            httpGet:
+              path: /info
+              port: 0
+          name: user-container
+          readinessProbe:
+            httpGet:
+              path: /info
+              port: 0
+          resources: {}
+      enableServiceLinks: false
+      timeoutSeconds: 300
+  traffic:
+    - latestRevision: true
+      percent: 100

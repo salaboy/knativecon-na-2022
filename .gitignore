@@ -4,7 +4,7 @@
 *.dll
 *.so
 *.dylib
-
+kubeconfig.yaml
 # Test binary, built with `go test -c`
 *.test
 
@@ -13,3 +13,5 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+.idea/
+gke_gcloud_auth_plugin_cache

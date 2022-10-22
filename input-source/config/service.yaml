@@ -1,0 +1,31 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  annotations:
+
+  name: input-source
+spec:
+  template:
+    metadata:
+    spec:
+      containerConcurrency: 0
+      containers:
+        - env:
+            - name: BUILT
+              value: 20220924T112015
+          image: ko://github.com/salaboy/knativecon-na-2022/input-source
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 0
+          name: user-container
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 0
+          resources: {}
+      enableServiceLinks: false
+      timeoutSeconds: 300
+  traffic:
+    - latestRevision: true
+      percent: 100

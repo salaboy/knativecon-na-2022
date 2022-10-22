@@ -1,0 +1,23 @@
+specVersion: 0.25.0
+name: process-function
+namespace: default
+runtime: go
+registry: docker.io/salaboy
+image: docker.io/salaboy/process-function:latest
+imageDigest: sha256:a85d9a918892fbb2a26af0ec207675e572211836b1766bc030b203c7eb06d230
+buildpacks:
+- paketo-buildpacks/go-dist
+- ghcr.io/boson-project/go-function-buildpack:tip
+builder: pack
+volumes: []
+buildEnvs: []
+envs: []
+annotations: {}
+options: {}
+labels: []
+healthEndpoints:
+  liveness: /health/liveness
+  readiness: /health/readiness
+created: 2022-10-19T13:16:08.88679+01:00
+invocation:
+  format: http

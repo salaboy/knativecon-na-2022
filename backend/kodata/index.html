@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Weirdest App</title>
+    <style>
+        html, body {
+
+            font-family: sans-serif;
+            color: #001524;
+            font-size: 20px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        h1, h2 {
+            font-weight: bold;
+        }
+
+        button {
+            font-size: 40px;
+            padding: 20px;
+            border-radius: 50%;
+            color: #001524;
+        }
+        button:hover {
+            color: white;
+            background-color: #001524;
+        }
+
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 10vh;
+            word-wrap: anywhere;
+            font-family: monospace;
+            background-color: #FBF8CC;
+        }
+
+        .image img {
+            object-fit: contain;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script>
+
+        function start() {
+
+            console.log("collecting data from function");
+            const color = ["#FFCFD2", "#F1C0E8","#CFBAF0","#A3C4F3", "#90DBF4", "#98F5E1", "#8EECF5", "#98F5E1" , "#FFCFD2", "#F1C0E8" ];
+
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", "/input", false);
+            xmlHttp.send(null);
+            document.getElementById("inputText").style.backgroundColor = color[Math.floor(Math.random() * 10)];
+            document.getElementById("inputText").innerHTML = xmlHttp.responseText;
+
+        }
+
+        function happy() {
+            console.log("happy evaluation");
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("POST", "/evaluate-happy", false);
+            xmlHttp.send(null);
+            results();
+            start();
+        }
+
+        function sad() {
+            console.log("sad evaluation");
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("POST", "/evaluate-sad", false);
+            xmlHttp.send(null);
+            results();
+            start();
+
+        }
+
+        function results() {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("GET", "/results", false);
+            xmlHttp.send(null);
+            document.getElementById("resultsText").innerHTML = xmlHttp.responseText;
+        }
+
+        function clearEvaluations() {
+            console.log("Clearing old evaluations");
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("DELETE", "/clear", false);
+            xmlHttp.send(null);
+            results();
+        }
+
+
+    </script>
+</head>
+<body onload="results();">
+<div class="content">
+
+    <div>
+        <button id="startBtn" onclick="start()">Start!</button>
+    </div>
+    <div>
+        <h1>How does this make you feel?</h1>
+        <div id="inputText" style="padding: 5vh 0; font-style: italic;">
+            [Hit start to test your feelings ... ]
+        </div>
+    </div>
+    <div>
+        <button onclick="happy()">:)</button>
+        <button onclick="sad()">:(</button>
+    </div>
+
+    <div>
+        <h3>Evaluations</h3>
+        <button onclick="clearEvaluations()">Clear</button>
+        <div id="resultsText"></div>
+
+    </div>
+
+</div>
+</body>
+</html>
