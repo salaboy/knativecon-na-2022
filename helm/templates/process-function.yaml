@@ -25,7 +25,9 @@ spec:
       - env:
         - name: BUILT
           value: 20221022T171652
-        image: docker.io/salaboy/process-function@sha256:7261f1b032778acfae20fc786914ca1bf4d83de097b8145f151a8af666afcfe4
+        - name: INPUT_SOURCE_URL
+          value: http://input-source-x-default-x-{{ .Values.teamName }}.{{ .Values.teamName }}.{{ .Values.domainName }}
+        image: docker.io/salaboy/process-function@sha256:7016611a7e85632ea177672e07d42f6be4b420e0fcf66d54188ab3b26f099264
         livenessProbe:
           httpGet:
             path: /health/liveness

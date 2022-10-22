@@ -17,6 +17,7 @@ import (
 var redisHost = os.Getenv("REDIS_HOST") // This should include the port which is most of the time 6379
 var redisPassword = os.Getenv("REDIS_PASSWORD")
 var redisTLSEnabled = os.Getenv("REDIS_TLS")
+var processFunctionURL = os.Getenv("PROCESS_FUNCTION_URL")
 var redisTLSEnabledFlag = false
 var client *redis.Client
 
@@ -85,7 +86,11 @@ func main() {
 }
 
 func FetchInputsHandler(writer http.ResponseWriter, request *http.Request) {
-	resp, err := http.Get("http://process-function.default.svc.cluster.local")
+	if processFunctionURL == "" {
+		processFunctionURL = "http://process-function.default.svc.cluster.local"
+	}
+
+	resp, err := http.Get(processFunctionURL)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -101,7 +106,6 @@ func FetchInputsHandler(writer http.ResponseWriter, request *http.Request) {
 func InfoHandler(writer http.ResponseWriter, request *http.Request) {
 	respondWithJSON(writer, http.StatusOK, "{ 'app': 'OK' }")
 }
-
 
 func EvaluateHappyHandler(writer http.ResponseWriter, request *http.Request) {
 	err := client.LPush("results", "1").Err()
@@ -124,7 +128,6 @@ func EvaluateSadHandler(writer http.ResponseWriter, request *http.Request) {
 	}
 
 }
-
 
 func UIHandler(writer http.ResponseWriter, request *http.Request) {
 	fileBytes, err := ioutil.ReadFile(os.Getenv("KO_DATA_PATH") + "/index.html")
@@ -159,7 +162,6 @@ func GetResultsHandler(writer http.ResponseWriter, request *http.Request) {
 
 	respondWithJSON(writer, http.StatusOK, evaluations)
 }
-
 
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, _ := json.Marshal(payload)

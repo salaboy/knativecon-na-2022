@@ -6,14 +6,16 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-
+	"os"
 )
 
-
+var inputSource = os.Getenv("INPUT_SOURCE_URL")
 // Handle an HTTP Request.
 func Handle(ctx context.Context, res http.ResponseWriter, req *http.Request) {
-
-	resp, err := http.Get("http://input-source.default.svc.cluster.local")
+	if inputSource == "" {
+		inputSource = "http://input-source.default.svc.cluster.local"
+	}
+	resp, err := http.Get(inputSource)
 	if err != nil {
 		log.Fatalln(err)
 	}

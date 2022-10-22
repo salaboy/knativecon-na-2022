@@ -6,9 +6,12 @@ import (
 	"log"
 	"net/http"
 	"github.com/tjarratt/babble"
+	"os"
+	"strconv"
 )
 
 
+var wordsCount = os.Getenv("WORDS_COUNT")
 
 func main() {
 
@@ -25,9 +28,15 @@ func main() {
 
 
 func InputHandler(writer http.ResponseWriter, request *http.Request) {
+	var wordsCountInt int
+	if wordsCount == ""{
+		wordsCountInt = 3
+	}else{
+		wordsCountInt, _ = strconv.Atoi(wordsCount)
+	}
 	babbler := babble.NewBabbler()
 	babbler.Separator = " "
-	babbler.Count = 3
+	babbler.Count = wordsCountInt
 
 	fmt.Fprintf(writer, babbler.Babble())
 

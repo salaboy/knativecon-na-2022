@@ -127,7 +127,7 @@ spec:
             chart:
               name: weird
               repository: https://salaboy.github.io/helm/
-              version: "0.1.0"
+              version: "0.1.4"
             namespace: default
           providerConfigRef: 
             name: #patched
