@@ -3,6 +3,7 @@ package function
 import (
 	"context"
 	"fmt"
+	"github.com/enescakir/emoji"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -25,6 +26,6 @@ func Handle(ctx context.Context, res http.ResponseWriter, req *http.Request) {
 		log.Fatalln(err)
 	}
 
-	fmt.Fprintf(res, string(body))
+	fmt.Fprintf(res, emoji.ManTechnologist.Tone(emoji.Light) + string(body) + emoji.ThumbsUp.String())
 }
 
