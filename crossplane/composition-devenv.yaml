@@ -115,19 +115,19 @@ spec:
           toFieldPath: metadata.name
       readinessChecks:
       - type: None
-    - name: redis-chart-vcluster
+    - name: weird-chart-vcluster
       base:
         apiVersion: helm.crossplane.io/v1beta1
         kind: Release
         metadata:
           annotations: 
-            crossplane.io/external-name: redis
+            crossplane.io/external-name: weird
         spec:
           forProvider:
             chart:
-              name: redis
-              repository: https://charts.bitnami.com/bitnami
-              version: "17.3.5"
+              name: weird
+              repository: https://salaboy.github.io/helm/
+              version: "0.1.0"
             namespace: default
           providerConfigRef: 
             name: #patched

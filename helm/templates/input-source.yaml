@@ -1,0 +1,32 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  annotations:
+    serving.knative.dev/creator: system:admin
+    serving.knative.dev/lastModifier: system:admin
+  name: input-source
+spec:
+  template:
+    metadata:
+    spec:
+      containers:
+      - env:
+        - name: BUILT
+          value: 20220924T112015
+        image: salaboy/input-source-3e567cab90adf9e218d882cd98cf5a0a@sha256:efc89edabbf87642283d6385f04a9ee195db124348fba317e7c26f26fcf0f686
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 0
+        name: user-container
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 0
+          successThreshold: 1
+        resources: {}
+      enableServiceLinks: false
+      timeoutSeconds: 300
+  traffic:
+  - latestRevision: true
+    percent: 100

@@ -1,0 +1,39 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  annotations:
+
+  name: backend
+spec:
+  template:
+    metadata:
+    spec:
+      containerConcurrency: 0
+      containers:
+        - env:
+            - name: BUILT
+              value: 20220924T112015
+            - name: REDIS_HOST
+              value: {{ .Release.Name }}-redis-master:6379
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-redis
+                  key: redis-password
+                  optional: false
+          image: salaboy/backend-39a27496f493c490df87b5d280702a2c@sha256:26f4c5e623f7e65410244a9eaf305fcdf4140704948e2d737bb833a0f9eae8e1
+          livenessProbe:
+            httpGet:
+              path: /info
+              port: 0
+          name: user-container
+          readinessProbe:
+            httpGet:
+              path: /info
+              port: 0
+          resources: {}
+      enableServiceLinks: false
+      timeoutSeconds: 300
+  traffic:
+    - latestRevision: true
+      percent: 100
