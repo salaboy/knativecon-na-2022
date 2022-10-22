@@ -16,7 +16,11 @@ spec:
             - name: REDIS_HOST
               value: my-redis-master:6379
             - name: REDIS_PASSWORD
-              value: 7c6GmTUzaa #kubectl get secret my-redis -o jsonpath="{.data.redis-password}" | base64 -d
+              valueFrom:
+                secretKeyRef:
+                  name: my-redis
+                  key: redis-password
+                  optional: false
           image: ko://github.com/salaboy/knativecon-na-2022/backend
           livenessProbe:
             httpGet:
