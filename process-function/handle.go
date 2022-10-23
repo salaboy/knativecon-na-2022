@@ -11,6 +11,7 @@ import (
 )
 
 var inputSource = os.Getenv("INPUT_SOURCE_URL")
+
 // Handle an HTTP Request.
 func Handle(ctx context.Context, res http.ResponseWriter, req *http.Request) {
 	if inputSource == "" {
@@ -26,6 +27,6 @@ func Handle(ctx context.Context, res http.ResponseWriter, req *http.Request) {
 		log.Fatalln(err)
 	}
 
-	fmt.Fprintf(res, emoji.ManTechnologist.Tone(emoji.Light) + string(body) + emoji.ThumbsUp.String())
+	fmt.Fprintf(res, emoji.ManTechnologist.Tone(emoji.Light)+emoji.ManTechnologist.Tone(emoji.Light)+
+		" -> "+string(body)+" <- "+emoji.ThumbsUp.String()+emoji.ThumbsUp.String())
 }
-
