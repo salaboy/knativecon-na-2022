@@ -28,7 +28,7 @@ spec:
             values:
               plugin:
                 knative-serving-plugin:
-                  image: salaboy/vcluster-knative-plugin
+                  image: salaboy/vcluster-knative-plugin:new
                   imagePullPolicy: Always
                   rbac:
                     role:
