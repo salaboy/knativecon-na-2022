@@ -25,8 +25,10 @@ spec:
       - env:
         - name: BUILT
           value: 20221022T171652
+        {{ if .Values.teamName }}
         - name: INPUT_SOURCE_URL
           value: http://input-source-x-default-x-{{ .Values.teamName }}.{{ .Values.teamName }}.{{ .Values.domainName }}
+        {{ end }}
         image: docker.io/salaboy/process-function@sha256:7016611a7e85632ea177672e07d42f6be4b420e0fcf66d54188ab3b26f099264
         livenessProbe:
           httpGet:

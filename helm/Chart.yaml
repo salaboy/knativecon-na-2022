@@ -1,10 +1,10 @@
 apiVersion: v2
 description: A Helm chart for a weird application
 name: weird
-version: 0.1.4
+version: 0.1.5
 type: application
 icon: https://salaboy.files.wordpress.com/2019/07/avatar.png
-appVersion: 0.1.4
+appVersion: 0.1.5
 maintainers: 
   - name: salaboy
     email: salaboy@gmail.com

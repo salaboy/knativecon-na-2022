@@ -11,16 +11,26 @@ spec:
       containerConcurrency: 0
       containers:
         - env:
+            {{ if .Values.teamName }}
             - name: PROCESS_FUNCTION_URL
               value: http://process-function-x-default-x-{{ .Values.teamName }}.{{ .Values.teamName }}.{{ .Values.domainName }}
+            {{ end }}
             - name: BUILT
               value: 20220924T112015
             - name: REDIS_HOST
+            {{ if .Values.teamName }}  
               value: {{ .Release.Name }}-redis-master-x-default-x-{{ .Values.teamName }}:6379
+            {{ else }}
+              value: {{ .Release.Name }}-redis-master:6379
+            {{ end }}  
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
+                  {{ if .Values.teamName }}
                   name: {{ .Release.Name }}-redis-x-default-x-{{ .Values.teamName }}
+                  {{ else }}
+                  name: {{ .Release.Name }}-redis
+                  {{ end }}  
                   key: redis-password
                   optional: false
           image: salaboy/backend-39a27496f493c490df87b5d280702a2c@sha256:0677a894da8f8e7c903e550c27da18e28f7060517648cf64ff16d84c2bc22cda
