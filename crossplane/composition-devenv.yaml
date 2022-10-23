@@ -130,6 +130,8 @@ spec:
               version: "0.1.4"
             values:
               domainName: 35.232.189.132.sslip.io
+              redis: 
+                architecture: standalone
             namespace: default
           providerConfigRef: 
             name: #patched
